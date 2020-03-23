@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Data Layer: Simple</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 92%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="info-box">
+        <textarea id='info-add'>Click on bubble to see data</textarea>
+        <p id='info-risk'></p>
+    </div>
+    <script>
+
+        var map;
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 15,
+                center: { lat: 47.606700, lng: -122.332500 }
+            });
+
+            //NOTE: This uses cross - domain XHR, and may not work on older browsers.
+            map.data.loadGeoJson(
+                // from google example    
+                //'https://storage.googleapis.com/mapsdevsite/json/google.json');
+                'https://data.seattle.gov/resource/54qs-2h7f.geojson');
+
+            console.log(map.data);
+
+            map.data.addListener('click', function (event) {
+                console.log(event);
+                infowindow.open(map, event);
+
+                var string1 = "address: \n" +
+                    event.feature.getProperty('address') + '\n' +
+                    event.feature.getProperty('city') + '\n' +
+                    event.feature.getProperty('state') + '\n' +
+                    event.feature.getProperty('zip_code') + ' '
+
+                var string2 = "building info: \n" +
+                    event.feature.getProperty('year_built') + '\n' +
+                    event.feature.getProperty('building_use') + '\n' +
+                    event.feature.getProperty('retrofit_level') + '\n' +
+                    event.feature.getProperty('preliminary_risk_category') + ' '
+
+                document.getElementById('info-add').value = string1;
+                document.getElementById('info-risk').textContent = string2;
+
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDXdiQnSS-qfYAhAcazLQKgQKEsWfhmF4g&callback=initMap">
+        </script>
+</body>
+
+</html>
