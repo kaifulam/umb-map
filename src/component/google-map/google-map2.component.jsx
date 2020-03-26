@@ -1,61 +1,117 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
-// Variables
+import Loading from '../fetch-data/fetch-data.component';
+
+import { connect } from 'react-redux';
+
 const GOOGLE_MAP_API_KEY = 'AIzaSyDXdiQnSS-qfYAhAcazLQKgQKEsWfhmF4g';
-const myLocation = { // CN Tower Landmark
-    lat: 43.642567,
-    lng: -79.387054
-};
-// styles
+
 const mapStyles = {
     width: '100%',
-    height: '400px',
+    height: '90vh',
 };
 
-function GoogleMaps(props) {
-    // refs
-    const googleMapRef = React.createRef();
-    const googleMap = useRef(null);
-    const marker = useRef(null);
+class GoogleMaps extends React.Component {
 
-    // helper functions
-    const createGoogleMap = () =>
-        new window.google.maps.Map(googleMapRef.current, {
-            zoom: 14,
-            center: {
-                lat: myLocation.lat,
-                lng: myLocation.lng
-            }
-        });
+    constructor(props) {
+        super(props);
+        this.onScriptLoad = this.onScriptLoad.bind(this)
+    }
 
-    const createMarker = () =>
-        new window.google.maps.Marker({
-            position: { lat: myLocation.lat, lng: myLocation.lng },
-            map: googleMap.current
-        });
+    onScriptLoad() {
+        const map = new window.google.maps.Map(
+            document.getElementById(this.props.id),
+            this.props.options);
+        this.props.onMapLoad(map)
+    }
 
-    // useEffect Hook
-    useEffect(() => {
-        const googleMapScript = document.createElement('script');
-        googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}&libraries=places`
-        window.document.body.appendChild(googleMapScript);
+    componentDidMount() {
+        if (!window.google) {
+            var s = document.createElement('script');
+            s.type = 'text/javascript';
+            s.src = `https://maps.google.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`;
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+            // Below is important. 
+            //We cannot access google.maps until it's finished loading
+            s.addEventListener('load', e => {
+                this.onScriptLoad()
+            })
+        } else {
+            this.onScriptLoad()
+        }
+    }
 
-        googleMapScript.addEventListener('load', () => {
-            googleMap.current = createGoogleMap();
-            marker.current = createMarker()
-        })
-    });
-
-    return (
-        <div
-            id="google-map"
-            ref={googleMapRef}
-            style={mapStyles}
-        />
-    )
-
+    render() {
+        return (
+            <div style={{ width: 500, height: 500 }} id={this.props.id} />
+        );
+    }
 }
 
-export default GoogleMaps
+export default GoogleMaps;
 
-//https://medium.com/@PeterKassenaar/icyi-i-rewrote-the-component-as-a-functional-component-using-react-hooks-6cf644a73bdd
+//https://cuneyt.aliustaoglu.biz/en/using-google-maps-in-react-without-custom-libraries/
+
+
+
+
+
+
+// constructor(props) {
+//     super(props);
+// }
+
+// onScriptLoad() {
+//     const map = new window.google.maps.Map(
+//       document.getElementById('gogole-map'));
+//     this.props.onMapLoad(map)
+//   }
+
+// componentDidMount() {
+//     // const googleMapScript = document.createElement('script');
+//     // googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`
+//     // window.document.body.appendChild(googleMapScript);
+
+
+//     const map = new window.google.maps.Map(document.getElementById('google-map'), {
+//         zoom: 14,
+//         center: {
+//             lat: 47.606700, lng: -122.332500
+//         },
+//         mapTypeControl: true,
+//         mapTypeId: 'roadmap',
+//     });
+// }
+
+
+
+// render() {
+//     return (
+//         <>
+//             {
+//                 this.props.isFetching ? (
+//                     <Loading />
+//                 ) : (
+//                         < div
+//                             id="google-map"
+//                             //ref={googleMapRef}
+//                             style={mapStyles}
+//                         />
+//                     )
+//             }
+//         </>
+
+//     )
+// }
+
+// }
+
+// function mapStateToProps(state) {
+//     return {
+//         filteredData: state.data.filteredData,
+//         isFetching: state.data.isFetching,
+//     }
+// }
+
+// export default connect(mapStateToProps, null)(GoogleMaps);

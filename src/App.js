@@ -1,64 +1,32 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { fetchDataStartAsync } from './redux/data/data.actions';
 
 import Header from './component/header/header.component';
-import Loading from './component/fetch-data/fetch-data.component';
 import GoogleMaps from './component/google-map/google-map.component';
+import Loading from './component/loading/loading.component';
 
 import './App.css';
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dataJson: null,
-      isFetching: true
-    }
-  }
-
-  removeHalf() {
-    var holder = this.state.dataJson;
-    //console.log(this.props);
-    holder.features = this.state.dataJson.features.slice(0, 100)
-    this.setState({
-      dataJson: holder
-    }, () => { console.log(this.state.dataJson) })
-  }
 
   componentDidMount() {
-    fetch('https://data.seattle.gov/resource/54qs-2h7f.geojson')
-      .then((res) => {
-        return res.json()
-      })
-      .then((data) => {
-        const test = () => {
-          this.setState({
-            dataJson: data,
-            isFetching: false
-          }, () => {
-            console.log(this.state.dataJson);
-            //console.log(this.state.isFetching);
-          })
-        }
-        setTimeout(test, 3000);
+    this.props.fetchDataStartAsync();
+  }
 
-        return this.state.dataJson;
-      })
+  componentDidUpdate() {
   }
 
   render() {
     return (
       <React.Fragment>
         <div className="App">
-          <button onClick={() => this.removeHalf()}>Click Me!</button>
           <Header />
-          {
-            this.state.isFetching ? (
-              <Loading />
-            ) : (
-                <GoogleMaps dataJson={this.state.dataJson} />
-              )
+          {this.props.isFetching ? (
+            <Loading />
+          ) : (
+              <GoogleMaps />
+            )
           }
         </div>
       </React.Fragment >
@@ -66,12 +34,22 @@ class App extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+const mapStateToProps = state => {
   return {
-    lowRisk: state.filter.lowRisk,
-    mediumRisk: state.filter.mediumRisk,
-    highRisk: state.filter.highRisk
+    isFetching: state.data.isFetching
   }
 }
 
-export default connect(mapStateToProps, null)(App);
+const mapDispatchToProps = dispatch => ({
+  fetchDataStartAsync: () => dispatch(fetchDataStartAsync())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+// cluster
+// marker color onSelect
+// filter year built, building use
+// format infowindow
+// format filter button when filter is set
+// filter value doesn't persist

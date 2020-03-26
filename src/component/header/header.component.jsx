@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import { Button, Modal } from 'react-bootstrap';
 import CustomButton from '../custom-button/custom-button.component';
 
 import { ReactComponent as Logo } from '../../assets/crwn.svg';
 
-import './header.styles.scss';
+//import './header.styles.scss';
+import "bootstrap/dist/css/bootstrap.min.css";
+import './header.styles.css';
 
 class Header extends React.Component {
     constructor() {
@@ -17,17 +16,21 @@ class Header extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className='header'>
-                    <Link className='logo-container' to="/">
+                <div className='navbar'>
+                    {/* <Link className='logo-container' to="/">
                         <Logo className='logo' />
-                    </Link>
-                    <div className='title'>Unreinforced Masonary Buildings</div>
+                    </Link> */}
+                    <div className='title'>
+                        <h4><b>&ensp;Unreinforced Masonary Buildings in Seattle</b></h4>
+                    </div>
                     <div className='options'>
-                        <CustomButton className='option'> Filter... </CustomButton>
-                        <CustomButton className='option'> About </CustomButton>
+                        <CustomButton className='option' id='filterButton'> Filter... </CustomButton>
+                        &ensp;
+                        <CustomButton className='option' id='aboutButton'> About </CustomButton>
+                        &ensp;
                     </div>
                 </div>
-            </React.Fragment>
+            </React.Fragment >
 
         )
     }

@@ -1,120 +1,161 @@
 import React from 'react';
-import { Modal, Form, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
+
+import {
+    resetFilteredData,
+    filterOutMediumRisk,
+    filterOutHighRisk,
+    filterOutCriticalRisk
+} from '../../redux/data/data.actions';
+
+import FilterForm from '../filter-form/filter-form.component';
+
+import { Modal, Button } from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 //import './custom-button.styles.scss';
 
 class CustomButton extends React.Component {
+
     constructor(props) {
         super(props);
 
         this.state = {
-            showModel: false,
-            lowRisk: true,
-            mediumRisk: true,
-            highRisk: true,
+            showModal: false
         }
     }
 
     handleToggle = () => {
         this.setState({
-            showModel: !this.state.showModel
+            showModal: !this.state.showModal
         })
     }
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({
-            showModel: !this.state.showModel
-        }, () => { console.log(this.state) })
-        console.log(event.target);
-    }
-    handleChange = event => {
-        const { checked, name } = event.target;
-        this.setState({ [name]: checked })
-        console.log(event.target)
+
+    handleSubmit = (val) => {
+        //e.preventDefault();
+        this.props.resetFilteredData();
+
+        if (!val.criticalRisk) {
+            this.props.filterOutCriticalRisk();
+        }
+        if (!val.highRisk) {
+            this.props.filterOutHighRisk();
+        }
+        if (!val.mediumRisk) {
+            this.props.filterOutMediumRisk();
+        }
+
+        this.handleToggle();
     }
 
     render() {
+        console.log(this.props.id)
 
-        return (
-            <React.Fragment>
-                <button className='custom-button' onClick={this.handleToggle}>
-                    {this.props.children}
-                </button>
-                {this.props.children == ' Filter... '
-                    ?
-                    (
-                        <Modal show={this.state.showModel} onHide={this.handleToggle}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>Data Filter</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <Form onSubmit={this.handleSubmit}>
-                                    <Form.Group>
-                                        <Form.Label>Risk Category</Form.Label>
-                                        <div key='inline'>
-                                            <Form.Check
-                                                name='lowRisk'
-                                                checked={this.state.lowRisk}
-                                                onChange={this.handleChange}
-                                                inline
-                                                label="Low"
-                                                id={`inline-1`}
-
-                                            />
-                                            <Form.Check
-                                                name='mediumRisk'
-                                                checked={this.state.mediumRisk}
-                                                onChange={this.handleChange}
-                                                inline
-                                                label="Medium"
-                                                id={`inline-2`}
-
-                                            />
-                                            <Form.Check
-                                                name='highRisk'
-                                                checked={this.state.highRisk}
-                                                onChange={this.handleChange}
-                                                inline
-                                                label="High"
-                                                id={`inline-3`}
-                                            />
-                                        </div>
-                                    </Form.Group>
-                                    <Form.Group>
-                                        <Form.Label>Year Built</Form.Label>
-                                    </Form.Group>
-                                    <Form.Group>
-                                        <Form.Label>Building Use</Form.Label>
-                                    </Form.Group>
-                                    <Button variant="primary" type="submit">
-                                        Submit
-                            </Button>
-                                </Form>
-                            </Modal.Body>
-                        </Modal>
-                    )
-                    :
-                    (
-                        <Modal show={this.state.showModel} onHide={this.handleToggle}>
-                            <Modal.Header closeButton>
-                                <Modal.Title>About</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                <div>
-                                    This page is about...
-                                    </div>
-                            </Modal.Body>
-
-                        </Modal>
-                    )
-                }
-
-            </React.Fragment >
-        )
+        if (this.props.id === 'filterButton') {
+            return (
+                <React.Fragment>
+                    <Button className='custom-button' onClick={this.handleToggle} id={this.props.id}>
+                        {this.props.children}
+                    </Button>
+                    <Modal show={this.state.showModal} onHide={this.handleToggle}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Data Filter</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <FilterForm onSubmit={this.handleSubmit} />
+                        </Modal.Body>
+                    </Modal>
+                </React.Fragment>
+            )
+        }
+        else {
+            return (
+                <React.Fragment>
+                    <Button className='custom-button' onClick={this.handleToggle} id={this.props.id}>
+                        {this.props.children}
+                    </Button>
+                    <Modal show={this.state.showModal} onHide={this.handleToggle}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>About</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <div>
+                                <p>This map is created based on data provided by <a href='https://www.seattle.gov/sdci/codes/changes-to-code/unreinforced-masonry-buildings/project-documents' target="_blank">City of Seattle</a>.</p>
+                                <p>This is <b>NOT</b> an official map created by the city. Use at your own risk.</p>
+                                <p>Last updated March 2020.</p>
+                                <p>Want to reach out? Let's connect on <a href='https://www.linkedin.com/in/kaifulam' target="_blank">LinkedIn</a>!</p>
+                            </div>
+                        </Modal.Body>
+                    </Modal>
+                </React.Fragment>
+            )
+        }
     }
 }
 
-export default CustomButton;
+const mapStateToProps = (state) => {
+    return {
+        mediumRisk: state.filter.mediumRisk,
+        highRisk: state.filter.highRisk,
+        criticalRisk: state.filter.criticalRisk
+    }
+}
+
+const mapDispatchToProps = dispatch => ({
+    resetFilteredData: () => dispatch(resetFilteredData()),
+    filterOutMediumRisk: () => dispatch(filterOutMediumRisk()),
+    filterOutHighRisk: () => dispatch(filterOutHighRisk()),
+    filterOutCriticalRisk: () => dispatch(filterOutCriticalRisk())
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomButton);
 
 //advanced if statement to distiguish filter from about
+
+
+
+
+
+
+
+
+        // return (
+        //     <React.Fragment>
+        //         <Button className='custom-button' onClick={this.handleToggle} id={this.props.id}>
+        //             {this.props.children}
+        //         </Button>
+
+        //         {this.props.id === 'filterButton' ? (
+        //             console.log('inside filterButton')
+        //         ) : (
+        //                 console.log('inside else statement')
+        //             )}
+
+        //         {
+        //             this.props.id === 'filterButton' ? (
+        //                 <Modal show={this.state.showModal} onHide={this.handleToggle}>
+        //                     <Modal.Header closeButton>
+        //                         <Modal.Title>Data Filter</Modal.Title>
+        //                     </Modal.Header>
+        //                     <Modal.Body>
+        //                         <FilterForm onSubmit={this.handleSubmit} />
+        //                     </Modal.Body>
+        //                 </Modal>
+        //             ) : (
+        //                     <Modal show={this.state.showModel} onHide={this.handleToggle}>
+        //                         <Modal.Header closeButton>
+        //                             <Modal.Title>About</Modal.Title>
+        //                         </Modal.Header>
+        //                         <Modal.Body>
+        //                             <div>
+        //                                 <p>This map is created based on <a href='https://data.seattle.gov/resource/54qs-2h7f.geojson'>data</a> provided by City of Seattle.</p>
+        //                             </div>
+        //                         </Modal.Body>
+
+        //                     </Modal>
+        //                 )
+        //         }
+
+        //     </React.Fragment >
+

@@ -1,27 +1,27 @@
 import FilterActionTypes from './filter.types';
-//import { addItemToCart, removeItemFromCart } from './cart.utils';
 
 const INITIAL_STATE = {
-    dataJson: null,
-    filteredData: null,
-    lowRisk: false,
     mediumRisk: true,
-    highRisk: true
+    highRisk: true,
+    criticalRisk: true
 };
 
 const filterReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case FilterActionTypes.TOGGLE_LOW:
+        case FilterActionTypes.TOGGLE_MEDIUM_RISK:
             return {
-                lowRisk: !state.lowRisk
-            }
-        case FilterActionTypes.TOGGLE_MEDIUM:
-            return {
+                ...state,
                 mediumRisk: !state.mediumRisk
             }
-        case FilterActionTypes.TOGGLE_HIGH:
+        case FilterActionTypes.TOGGLE_HIGH_RISK:
             return {
+                ...state,
                 highRisk: !state.highRisk
+            }
+        case FilterActionTypes.TOGGLE_CRITICAL_RISK:
+            return {
+                ...state,
+                criticalRisk: !state.criticalRisk
             }
         default:
             return state;

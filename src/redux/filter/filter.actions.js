@@ -1,18 +1,13 @@
 import FilterActionTypes from './filter.types';
 
-export const toggleLow = () => ({
-    type: FilterActionTypes.TOGGLE_LOW
+export const toggleMediumRisk = () => ({
+    type: FilterActionTypes.TOGGLE_MEDIUM_RISK,
 });
 
-export const toggleMedium = () => ({
-    type: FilterActionTypes.TOGGLE_MEDIUM
+export const toggleHighRisk = () => ({
+    type: FilterActionTypes.TOGGLE_HIGH_RISK,
 });
 
-export const toggleHigh = () => ({
-    type: FilterActionTypes.TOGGLE_HIGH
+export const toggleCriticalRisk = () => ({
+    type: FilterActionTypes.TOGGLE_CRITICAL_RISK,
 });
-
-export const clearFilter = item => ({
-    type: FilterActionTypes.CLEAR_FILTER,
-    payload: item
-})
