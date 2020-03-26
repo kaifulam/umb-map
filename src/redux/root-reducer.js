@@ -18,8 +18,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
     data: dataReducer,
-    form: formReducer,
-    filter: filterReducer
+    form: formReducer
 });
 
 export default persistReducer(persistConfig, rootReducer);

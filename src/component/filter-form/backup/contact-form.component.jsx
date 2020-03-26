@@ -3,10 +3,6 @@ import { Field, reduxForm } from 'redux-form';
 
 class ContactForm extends Component {
 
-    // handleSubmit() {
-    //     console.log()
-    // }
-
     render() {
         const { handleSubmit } = this.props;
         return (

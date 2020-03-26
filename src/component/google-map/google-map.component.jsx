@@ -2,7 +2,11 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
+// testing API key
 const GOOGLE_MAP_API_KEY = 'AIzaSyDXdiQnSS-qfYAhAcazLQKgQKEsWfhmF4g';
+
+// production API key
+// const GOOGLE_MAP_API_KEY = 'AIzaSyCinvpyTbzEbiWJCtAalDLKhPRiBCnnl3k';
 
 const mapStyles = {
     width: '100%',
@@ -60,7 +64,6 @@ class GoogleMaps extends React.Component {
             document.getElementById('google-map'),
             mapOptions);
         var filteredDataLength = Object.keys(this.props.filteredData.features).length;
-        console.log(filteredDataLength)
         const markerCollect = [];
 
         var infowindow = new window.google.maps.InfoWindow();
@@ -80,7 +83,6 @@ class GoogleMaps extends React.Component {
                 })
                 window.google.maps.event.addListener(marker, 'click', (function (marker, i) {
                     return function () {
-                        console.log(i, marker);
                         // infowindow.setContent(JSON.stringify(marker.location));
                         infowindow.setContent(createInfoWindowText(marker.location));
                         infowindow.open(mapHolder, marker);
@@ -90,7 +92,6 @@ class GoogleMaps extends React.Component {
                 markerCollect.push(marker);
             };
         }
-        console.log(markerCollect);
     }
 
 
@@ -109,7 +110,6 @@ class GoogleMaps extends React.Component {
         } else {
             this.onScriptLoad()
         }
-        console.log(this.props.filteredData)
     }
 
     componentDidUpdate() {
@@ -117,8 +117,6 @@ class GoogleMaps extends React.Component {
     }
 
     render() {
-        //console.log(this.props.filteredData);
-
         return (
             <div style={mapStyles} id='google-map' />
         );

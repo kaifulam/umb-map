@@ -11,10 +11,8 @@ class FilterForm extends Component {
 
     render() {
         const { handleSubmit, reset } = this.props;
-        console.log(this.props.criticalRisk);
         return (
             <form onSubmit={handleSubmit} >
-                {/* initialValues={{ mediumRisk: true, highRisk: true}}> */}
                 <div>
                     <label htmlFor="risk-category">Risk Category</label>
                     <div>

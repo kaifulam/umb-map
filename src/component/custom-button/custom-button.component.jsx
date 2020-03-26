@@ -49,8 +49,6 @@ class CustomButton extends React.Component {
     }
 
     render() {
-        console.log(this.props.id)
-
         if (this.props.id === 'filterButton') {
             return (
                 <React.Fragment>
@@ -93,14 +91,6 @@ class CustomButton extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        mediumRisk: state.filter.mediumRisk,
-        highRisk: state.filter.highRisk,
-        criticalRisk: state.filter.criticalRisk
-    }
-}
-
 const mapDispatchToProps = dispatch => ({
     resetFilteredData: () => dispatch(resetFilteredData()),
     filterOutMediumRisk: () => dispatch(filterOutMediumRisk()),
@@ -109,7 +99,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(CustomButton);
+export default connect(null, mapDispatchToProps)(CustomButton);
 
 //advanced if statement to distiguish filter from about
 
