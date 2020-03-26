@@ -78,10 +78,10 @@ class CustomButton extends React.Component {
                         </Modal.Header>
                         <Modal.Body>
                             <div>
-                                <p>This map is created based on data provided by <a href='https://www.seattle.gov/sdci/codes/changes-to-code/unreinforced-masonry-buildings/project-documents' target="_blank">City of Seattle</a>.</p>
+                                <p>This map is created based on data provided by <a href='https://www.seattle.gov/sdci/codes/changes-to-code/unreinforced-masonry-buildings/project-documents' target="_blank" rel="noopener noreferrer">City of Seattle</a>.</p>
                                 <p>This is <b>NOT</b> an official map created by the city. Use at your own risk.</p>
                                 <p>Last updated March 2020.</p>
-                                <p>Want to reach out? Let's connect on <a href='https://www.linkedin.com/in/kaifulam' target="_blank">LinkedIn</a>!</p>
+                                <p>Want to reach out? Let's connect on <a href='https://www.linkedin.com/in/kaifulam' target="_blank" rel="noopener noreferrer">LinkedIn</a>!</p>
                             </div>
                         </Modal.Body>
                     </Modal>

@@ -2,11 +2,8 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 
-// testing API key
-const GOOGLE_MAP_API_KEY = 'AIzaSyDXdiQnSS-qfYAhAcazLQKgQKEsWfhmF4g';
-
 // production API key
-// const GOOGLE_MAP_API_KEY = 'AIzaSyCinvpyTbzEbiWJCtAalDLKhPRiBCnnl3k';
+const GOOGLE_MAP_API_KEY = 'AIzaSyCinvpyTbzEbiWJCtAalDLKhPRiBCnnl3k';
 
 const mapStyles = {
     width: '100%',
@@ -21,10 +18,6 @@ const mapOptions = {
     mapTypeControl: true,
     mapTypeId: 'roadmap'
 }
-
-// const mapFunc = () => new window.google.maps.Map(
-//     document.getElementById('google-map'),
-//     mapOptions);
 
 const createInfoWindowText = (location) => {
 
@@ -56,7 +49,6 @@ class GoogleMaps extends React.Component {
     constructor(props) {
         super(props);
         this.onScriptLoad = this.onScriptLoad.bind(this);
-        //this.createInfoWindowText = this.createInfoWindowText.bind(this);
     }
 
     onScriptLoad() {

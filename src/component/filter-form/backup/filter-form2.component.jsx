@@ -5,7 +5,7 @@ import {
     toggleMediumRisk,
     toggleHighRisk,
     toggleCriticalRisk
-} from '../../redux/filter/filter.actions'
+} from '../../../redux/filter/filter.actions'
 
 class FilterForm extends React.Component {
     constructor(props) {

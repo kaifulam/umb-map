@@ -1,7 +1,7 @@
 import React from 'react';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { ReactComponent as Logo } from '../../assets/crwn.svg';
+//import { ReactComponent as Logo } from '../../assets/crwn.svg';
 
 //import './header.styles.scss';
 import "bootstrap/dist/css/bootstrap.min.css";
