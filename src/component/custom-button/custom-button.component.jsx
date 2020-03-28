@@ -78,9 +78,12 @@ class CustomButton extends React.Component {
                         </Modal.Header>
                         <Modal.Body>
                             <div>
-                                <p>This map is created based on data provided by <a href='https://www.seattle.gov/sdci/codes/changes-to-code/unreinforced-masonry-buildings/project-documents' target="_blank" rel="noopener noreferrer">City of Seattle</a>.</p>
+                                <iframe width="450" height="253" src="https://www.youtube.com/embed/oYxbUyFyKb4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                <br />
+                                <p><a href='https://www.seattle.gov/emergency-management/hazards/unreinforced-masonry-buildings-(urm)-' target="_blank" rel="noopener noreferrer"><b>Unreinforced Masonry Buildings</b></a> are susceptible to damages or collapse during an <a href='https://mynorthwest.com/category/earthquake_tracker/' target="_blank" rel="noopener noreferrer">earthquake</a>.</p>
+                                <p>This map is created using live data provided by <a href='https://www.seattle.gov/sdci/codes/changes-to-code/unreinforced-masonry-buildings/project-documents' target="_blank" rel="noopener noreferrer">City of Seattle</a>.</p>
                                 <p>This is <b>NOT</b> an official map created by the city. Use at your own risk.</p>
-                                <p>Last updated March 2020.</p>
+                                <p>Last updated in March, 2020.</p>
                                 <p>Want to reach out? Let's connect on <a href='https://www.linkedin.com/in/kaifulam' target="_blank" rel="noopener noreferrer">LinkedIn</a>!</p>
                             </div>
                         </Modal.Body>
